@@ -3,6 +3,9 @@
     <img src="./assets/logo.png">
     <router-view/>
   </div>
+  <div>
+    
+  </div>
 </template>
 
 <script>
