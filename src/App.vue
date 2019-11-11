@@ -3,9 +3,6 @@
     <img src="./assets/logo.png">
     <router-view/>
   </div>
-  <div>
-    aaa
-  </div>
 </template>
 
 <script>
