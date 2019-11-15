@@ -9,6 +9,19 @@ import './assets/css/global.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import axios from 'axios'
+
+// 不生效
+// axios.defaults.baseURI = 'http://localhost:6078/'
+// 请求拦截器预处理 保证拥有获取数据的权限 除了登录后续的每次请求都会带过去token
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  console.log(config)
+  return config
+})
+
+Vue.prototype.$http = axios
+
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

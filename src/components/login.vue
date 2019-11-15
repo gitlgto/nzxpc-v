@@ -5,7 +5,7 @@
         <img src="../assets/logo.png" alt="">
       </div>
       <!--ref="form" :model="form"  v-model="form.name"-->
-      <el-form :model="loginForm" :rules="loginFormRules" class="login_form">
+      <el-form ref="loginRef" :model="loginForm" :rules="loginFormRules" class="login_form">
         <!--label="活动名称" label-width="80px"-->
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="用户名" prefix-icon="el-icon-user-solid"></el-input>
@@ -14,8 +14,8 @@
           <el-input v-model="loginForm.password" placeholder="密码" prefix-icon="el-icon-s-goods" type="password"></el-input>
         </el-form-item>
         <el-form-item class="btns">
-          <el-button type="primary">登录</el-button>
-          <el-button type="info">重置</el-button>
+          <el-button type="primary" @click="loginR">登录</el-button>
+          <el-button type="info" @click="rest">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,8 +27,8 @@ export default {
     return {
       // 登录表单数据绑定对象
       loginForm: {
-        username: 'z',
-        password: '123'
+        username: 'admin',
+        password: 'aaaaa'
       },
       loginFormRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' },
@@ -37,6 +37,31 @@ export default {
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }]
       }
     }
+  },
+  methods: {
+    rest () {
+      // console.log(this)
+      this.$refs.loginRef.resetFields()
+    },
+    loginR () {
+      this.$refs.loginRef.validate(async val => {
+        // console.log(this.name) 返回验证结果val
+        if (!val) {
+          // 目前已经引入element，对应方法不需要另引用，只需直接使用加$
+          this.$message.error('登陆失败')
+        } else {
+          // 只有发送才有预处理 返回config 预处理主要存储第一次返回给前端的token，这样在接下来的每次请求中都会带着这个token，
+          // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
+          // const result = await this.$http.post('http://localhost:6078/login',
+          //   this.loginForm)
+          // console.log(result)
+          this.$message.success('登陆成功')
+          window.sessionStorage.setItem('token', 98177010213298356078)
+          this.$router.push('/home')
+        }
+      })
+    }
+
   }
 }
 </script>
