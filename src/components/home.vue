@@ -127,8 +127,8 @@ export default {
           }
         ]
       }
-      // if (res.status !== 200) return this.$message.error('请求失败')
-      console.log(ret)
+      if (ret.status === 200) return this.$message.success(ret.msg)
+      console.log(res)
     }
   }
 }
