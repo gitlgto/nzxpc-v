@@ -9,19 +9,21 @@
     </el-header>
 
     <el-container>
-      <el-aside width="200px">
+      <!--只有加冒号 引用的才能生效-->
+      <el-aside :width="isCollapse?'64px':'200px'">
+        <div class="toggle-button" @click="toggleBtn">|||</div>
         <el-menu
           background-color="coral"
           text-color="#fff"
-          active-text-color="#ffd04b">
-          <!--一级菜单-->
-          <el-submenu index="1">
+          active-text-color="#ffd04b" unique-opened :collapse="isCollapse" :collapse-transition="false" :router="true" :default-active="btn">
+          <!--一级菜单 是否只打开一个子菜单 是否关闭侧边菜单 是否关闭折叠动画 启动以index为链接地址的导航跳转-->
+          <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
             <!--一级菜单的模版区域-->
             <template slot="title">
               <!--图标-->
-              <i class="el-icon-location"></i>
+              <i :class="iconsObj[item.id]"></i>
               <!--文本-->
-              <span>导航一</span>
+              <span>{{item.authName}}</span>
             </template>
             <!--<el-menu-item-group>-->
               <!--<template slot="title">分组一</template>-->
@@ -37,10 +39,10 @@
             <!--</el-submenu>-->
 
             <!--二级菜单-->
-            <el-menu-item index="1-4-1">
+            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveBtn('/'+subItem.path)">
               <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <i class="el-icon-menu"></i>
+                <span>{{subItem.authName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -59,8 +61,8 @@
         </el-menu>
       </el-aside>
       <el-container>
-
-        <el-main>Main
+        <!--将页面定位到这个区域 路由占位符-->
+        <el-main><router-view></router-view>
         </el-main>
 
         <el-footer>Footer
@@ -71,15 +73,25 @@
   </el-container>
 </template>
 <script>
+import utils from '../assets/js/data'
+
 export default {
   data () {
     return {
-      menulist: []
+      menulist: [],
+      iconsObj: {
+        '101': 'el-icon-shopping-cart-full',
+        '102': 'el-icon-coin',
+        '105': 'el-icon-s-custom'
+      },
+      isCollapse: false,
+      btn: ''
     }
   },
   // 生命周期函数
   created () {
     this.getMenuList()
+    this.btn = window.sessionStorage.getItem('btn')
   },
   methods: {
     loginOut () {
@@ -91,44 +103,28 @@ export default {
       // 直接这样写可以访问到接口
       // const {data: ret} = await this.$http.get('http://localhost:6078/login')
       // if (ret.meta.status !== 200) return this.$message.error('')
-      // console.log(ret)
-      const {data: res, meta: ret} = {
-        'meta': {'msg': '成功', 'status': 200},
-        'data': [
-          {
-            'id': 101,
-            'authName': '商品管理',
-            'path': null,
-            'children': [
-              {
-                'id': 103,
-                'authName': '商品列表',
-                'path': null,
-                'children': []
-              }
-            ]
-          },
-          {
-            'id': 102,
-            'authName': '资产管理',
-            'path': null,
-            'children': [
-              {
-                'id': 104,
-                'authName': '资产列表',
-                'path': null,
-                'children': []
-              }
-            ]
-          },
-          {
-            'msg': '获取菜单成功',
-            'status': 200
-          }
-        ]
+      // console.log(ret) const{data: res, meta: ret}
+      // 为了手动添加更多的数据，而不造成每个页面都写入大量数据，现在将数据写在一个js中，然后在main.js中进行引入，还要在要使用的页面的script中引入
+      // ，而其实main.js中不需要引用，然后在其他页面中的script中直接
+      // 调用改js对应方法即可，以达到每个页面都可以获取该数据进行暂时使用。暂不访问后台。如果还是想在页面写数据，只需将js中复制过来即可
+      const ret = utils.getDatas()
+      if (ret.meta.status !== 200) {
+        return this.$message.error(ret.meta.msg)
+      } else if (ret.meta.status === 200) {
+        this.$message.success(ret.meta.msg)
+        // console.log(res.data)
+        console.log(ret)
+        this.menulist = ret.data
       }
-      if (ret.status === 200) return this.$message.success(ret.msg)
-      console.log(res)
+    },
+    toggleBtn () {
+      this.isCollapse = !this.isCollapse
+    },
+    // 保存链接的激活状态
+    saveBtn (btn) {
+      window.sessionStorage.setItem('btn', btn)
+      // 重新赋值切换链接保持高亮
+      this.btn = btn
     }
   }
 }
@@ -152,6 +148,10 @@ export default {
 }
   .el-aside{
     background-color: coral;
+    .el-menu {
+      //去除左侧菜单滚轮
+      border-right: none;
+    }
   }
   .el-main{
     background-color: cornflowerblue;
@@ -162,5 +162,15 @@ export default {
   .home_container{
     /*width: 100%;*/
     height: 100%;
+  }
+  .toggle-button{
+    background-color: darkturquoise;
+    font-size: 15px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    //设置字段间距
+    letter-spacing: 0.2em;
+    cursor: pointer;
   }
 </style>

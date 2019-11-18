@@ -8,6 +8,7 @@ import router from './router'
 import './assets/css/global.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// import './assets/js/data.js'
 
 import axios from 'axios'
 
