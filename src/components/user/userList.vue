@@ -143,7 +143,7 @@ export default {
     async changeUserStatus (userInfo) {
       // 用于测试修改000状态
       // const ret = await this.$http.put(`users/${userInfo.id}/changeStatus/${userInfo.userStatus}`)
-      const ok = this.change000Status(userInfo.id, userInfo.status)
+      const ok = this.change000Status(userInfo.id, userInfo.userStatus)
       if (ok) {
         // 回头整成工具类 另外还选中是因为又重新请求，但没改变
         this.$message.success('更新状态成功')

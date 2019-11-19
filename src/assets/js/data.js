@@ -149,7 +149,7 @@ var utils = {
       return !ok
     }
     // console.log(userLists.data[0].users[0]) 修改成功但没改变值，请求的还是之前的数组,如何修改数组数组
-  },
+  }
   // getNewList: function getNewList () {
   //   const ret = {}
   //   return ret
