@@ -113,7 +113,7 @@ export default {
       } else if (ret.meta.status === 200) {
         this.$message.success(ret.meta.msg)
         // console.log(res.data)
-        console.log(ret)
+        // console.log(ret)
         this.menulist = ret.data
       }
     },
