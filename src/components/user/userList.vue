@@ -13,9 +13,11 @@
         <!--{{'列表内容 ' + o }}-->
       <!--</div>   class="box-card"  gutter实现每一栏的间隔-->
       <el-row :gutter="10">
-        <el-col :span="10"><el-input placeholder="请输入内容">
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input></el-col>
+        <el-col :span="10">
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getUserList">
+          <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+        </el-input>
+        </el-col>
         <el-col :span="4">
           <el-button type="primary">添加用户</el-button>
         </el-col>

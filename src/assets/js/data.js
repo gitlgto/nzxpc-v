@@ -137,9 +137,9 @@ var utils = {
     return res
   },
   changeStatus: function change000Status (id, status) {
-    const ok = true
-    const userLists = utils.getUserLists()
-    const uid = userLists.data[0].users[0].id
+    var ok = true
+    var userLists = utils.getUserLists()
+    var uid = userLists.data[0].users[0].id
     // const userStatus = userLists.data[0].users[0].userStatus
     if (id === uid) {
       // const newList = utils.getNewList()
@@ -148,7 +148,7 @@ var utils = {
     } else {
       return !ok
     }
-    // console.log(userLists.data[0].users[0]) 修改成功但没改变值，请求的还是之前的数组,如何修改数组数组
+    // console.log(userLists.data[0].users[0]) 修改成功但没改变值，请求的还是之前的数组,如何修改数组,目前没好的办法解决
   }
   // getNewList: function getNewList () {
   //   const ret = {}
