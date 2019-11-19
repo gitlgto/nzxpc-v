@@ -153,6 +153,9 @@ export default {
     getUserTwoLists () {
       // 该数据用于测试返回的分页数据 第一页 两条每页
       const twoLists = utils.getUserTwoLists()
+      // 再获取时在添加一次已达到添加后数据实时显示效果，只用测试可以删掉
+      twoLists.data[0].users.push({'id': 506, 'username': 'lhh', 'userStatus': true})
+      // console.log(twoLists)
       this.userList = twoLists.data[0].users
       this.total = twoLists.data[0].total
     },
@@ -220,8 +223,9 @@ export default {
           // const ret = await this.$http.post('addUser', this.addForm) 发送请求
           // 添加成功隐藏对话框
           const twoLists = utils.getUserTwoLists()
-          // 实现添加查询删除可以定义数组来实现具体待试验，这是添加，删除是prop
-          twoLists.data[0].users.push(['dog', 3])
+          // 实现添加查询删除可以定义数组来实现具体待试验，这是添加，删除是prop 但是有一个问题不能实时获取改变后的数据，因为再次请求还是获取的初始化数据
+          // 但可以在获取数据时再添加一次 不加[]加过之后相当于users下标中又多了一个下标
+          twoLists.data[0].users.push({'id': 506, 'username': 'lhh', 'userStatus': true})
           console.log(twoLists)
           this.addDialogVisible = false
           return this.$message.success('添加成功')
