@@ -1,5 +1,5 @@
 var utils = {
-  getDatas: function getData() {
+  getDatas: function getData () {
     const ret = {
       'meta': {'msg': '成功', 'status': 200},
       'data': [
@@ -110,7 +110,7 @@ var utils = {
               'id': 501,
               'username': 'admin',
               'userStatus': true
-            },
+            }
           ]}
       ]
     }
