@@ -19,7 +19,7 @@
         </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary">添加用户</el-button>
+          <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button>
         </el-col>
       </el-row>
       <!-- 竖直方向的边框 斑马纹-->
@@ -60,6 +60,24 @@
         :total="total">
       </el-pagination>
     </el-card>
+    <!--添加用户的对话框-->
+    <el-dialog
+      title="提示"
+      :visible.sync="addDialogVisible"
+      width="50%" @close="addDialogClosed">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="addForm.username"></el-input>
+        </el-form-item>
+        <el-form-item label="金额" prop="money">
+          <el-input v-model="addForm.money"></el-input>
+        </el-form-item>
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="addDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="addUser">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -68,6 +86,16 @@ import utils from '../../assets/js/data'
 
 export default {
   data () {
+    var checkUserName = (rule, value, cb) => {
+      // 手机号的正则用于测试 自定义验证规则
+      var reg = /^1[3456789]\d{9}$/
+      if (reg.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入正确数据'))
+    }
+    // var checkPassWord=(rule, value, cb) => {}
+
     return {
       // 获取用户列表的参数对象
       queryInfo: {
@@ -78,7 +106,23 @@ export default {
         pageNum: 1
       },
       userList: [],
-      total: 0
+      total: 0,
+      // 控制添加对话框的显示与隐藏
+      addDialogVisible: false,
+      // 添加用户表单数据
+      addForm: {username: '', money: ''},
+      // 添加表单的验证规则
+      addFormRules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 1, max: 11, message: '长度在 1到 11个字符', trigger: 'blur' },
+          {validator: checkUserName, trigger: 'blur'}
+        ],
+        money: [
+          { required: true, message: '请输入金额', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   created () {
@@ -87,6 +131,7 @@ export default {
   methods: {
     async getUserList () {
       const res = utils.getUserLists()
+      const ret = utils.getUserOneLists()
       // console.log(res)
       // const {data: ret} = await this.$http.get('/userList',{params: this.queryInfo})
       // console.log(ret)
@@ -95,7 +140,12 @@ export default {
       } else if (res.meta.status === 200) {
         // 得用下标取
         this.$message.success(res.meta.msg)
-        this.userList = res.data[0].users
+        // 只能采用这种方式实现搜索,只搜索一条数据作为演示
+        if ('000'.indexOf(this.queryInfo.query) !== -1 && this.queryInfo.query !== '') {
+          this.userList = ret.data[0].users
+        } else {
+          this.userList = res.data[0].users
+        }
         this.total = res.data[0].total
         console.log(res.data[0].users)
       }
@@ -156,6 +206,27 @@ export default {
         this.$message.error('失败')
       }
       // console.log(userInfo)
+    },
+    addDialogClosed () {
+      this.$refs.addFormRef.resetFields()
+    },
+    // 点击按钮添加新用户
+    addUser () {
+      this.$refs.addFormRef.validate(async val => {
+        // true false
+        if (!val) {
+          return this.$message.error('数据输入错误')
+        } else {
+          // const ret = await this.$http.post('addUser', this.addForm) 发送请求
+          // 添加成功隐藏对话框
+          const twoLists = utils.getUserTwoLists()
+          // 实现添加查询删除可以定义数组来实现具体待试验，这是添加，删除是prop
+          twoLists.data[0].users.push(['dog', 3])
+          console.log(twoLists)
+          this.addDialogVisible = false
+          return this.$message.success('添加成功')
+        }
+      })
     }
   }
 

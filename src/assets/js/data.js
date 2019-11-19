@@ -92,6 +92,7 @@ var utils = {
     return res
   },
   getUserTwoLists: function getUserList () {
+    var list = []
     const res = {
       'meta': {'msg': '成功', 'status': 200},
       'data': [
@@ -114,6 +115,7 @@ var utils = {
           ]}
       ]
     }
+    list.push(res)
     return res
   },
   getUserOneLists: function getUserList () {
