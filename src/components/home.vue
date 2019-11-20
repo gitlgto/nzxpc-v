@@ -82,7 +82,8 @@ export default {
       iconsObj: {
         '101': 'el-icon-shopping-cart-full',
         '102': 'el-icon-coin',
-        '105': 'el-icon-s-custom'
+        '105': 'el-icon-s-custom',
+        '99': 'el-icon-lock'
       },
       isCollapse: false,
       btn: ''

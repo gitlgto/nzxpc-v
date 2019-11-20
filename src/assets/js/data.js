@@ -4,6 +4,19 @@ var utils = {
       'meta': {'msg': '成功', 'status': 200},
       'data': [
         {
+          'id': 99,
+          'authName': '权限管理',
+          'path': null,
+          'children': [
+            {
+              'id': 100,
+              'authName': '权限列表',
+              'path': 'authList',
+              'children': []
+            }
+          ]
+        },
+        {
           'id': 101,
           'authName': '商品管理',
           'path': null,
