@@ -102,6 +102,8 @@ export default {
     // 获取所有菜单
     async getMenuList () {
       const http = this.$http.get('http://localhost:8095/fhB2bProductCate/list')
+      // const http1 = this.$http.get('http://localhost:6078/home/login')
+      // console.log(http1)
       console.log(http)
       // 直接这样写可以访问到接口
       // const {data: ret} = await this.$http.get('http://localhost:6078/login')
