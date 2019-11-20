@@ -40,8 +40,8 @@
         <!-- width="" 以改变操作栏-->
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
-            <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="editUser(scope.row.id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUser(scope.row.id)"></el-button>
             <!-- enterable控制避免提示文字重叠-->
             <el-tooltip class="item" effect="dark" content="添加" placement="top-start" :enterable="false">
               <el-button type="warning" icon="el-icon-plus" size="mini"></el-button>
@@ -76,6 +76,23 @@
       <span slot="footer" class="dialog-footer">
     <el-button @click="addDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="addUser">确 定</el-button>
+  </span>
+    </el-dialog>
+    <el-dialog
+      title="编辑用户"
+      :visible.sync="eidtDialogVisible"
+      width="50%" @close="editDialogClosed">
+      <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="80px">
+        <el-form-item label="编号">
+          <el-input v-model="editForm.id" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="editForm.username"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="eidtDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editUserInfo">确 定</el-button>
   </span>
     </el-dialog>
   </div>
@@ -122,6 +139,14 @@ export default {
           { required: true, message: '请输入金额', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
+      },
+      eidtDialogVisible: false,
+      // 查询到的用户信息
+      editForm: {},
+      editFormRules: {
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 1, max: 11, message: '长度在 1到 11 个字符', trigger: 'blur' },
+          {validator: checkUserName, trigger: 'blur'}]
       }
     }
   },
@@ -144,10 +169,11 @@ export default {
         if ('000'.indexOf(this.queryInfo.query) !== -1 && this.queryInfo.query !== '') {
           this.userList = ret.data[0].users
         } else {
+          // res.data[0].users.push({'id': 506, 'username': 'lhh', 'userStatus': true})
           this.userList = res.data[0].users
         }
         this.total = res.data[0].total
-        console.log(res.data[0].users)
+        // console.log(res.data[0].users)
       }
     },
     getUserTwoLists () {
@@ -220,17 +246,72 @@ export default {
         if (!val) {
           return this.$message.error('数据输入错误')
         } else {
+          // console.log(this.addForm.username)
           // const ret = await this.$http.post('addUser', this.addForm) 发送请求
           // 添加成功隐藏对话框
-          const twoLists = utils.getUserTwoLists()
+          const twoLists = utils.getUserLists()
           // 实现添加查询删除可以定义数组来实现具体待试验，这是添加，删除是prop 但是有一个问题不能实时获取改变后的数据，因为再次请求还是获取的初始化数据
           // 但可以在获取数据时再添加一次 不加[]加过之后相当于users下标中又多了一个下标
-          twoLists.data[0].users.push({'id': 506, 'username': 'lhh', 'userStatus': true})
-          console.log(twoLists)
+          twoLists.data[0].users.push({'id': this.addForm.id, 'username': this.addForm.username, 'userStatus': true})
+          // console.log(twoLists)
           this.addDialogVisible = false
+          // 重新获取用户列表
+          this.getUserList()
           return this.$message.success('添加成功')
         }
       })
+    },
+    async editUser (id) {
+      // const item = await this.$http.get('getUser/' + id)
+      // if (item.meta.status !== 200) {
+      //   return this.$message.error('查询失败')
+      // }
+      // 定义editform 并将获得的值赋到editform 绑定到表单model上
+      // this.editForm=item.data
+      const ret = utils.getUserLists()
+      ret.data[0].users.forEach(item => {
+        // console.log(it) 可采用遍历来操作值的添加删除以免写死
+        if (item.id === id) {
+          this.editForm = {'id': item.id, 'username': item.username}
+        }
+      })
+      this.eidtDialogVisible = true
+    },
+    editDialogClosed () {
+      this.$refs.editFormRef.resetFields()
+    },
+    editUserInfo () {
+      this.$refs.editFormRef.validate(async val => {
+        if (!val) {
+          return this.$message.error('数据输入错误')
+        } else {
+          // const ret = await this.$http.put('editUser/' + this.editForm.id, {username: this.editForm.username})
+          // this.eidtDialogVisible = false
+          // this.getUserList()
+          // const ret = utils.getUserLists()
+          // console.log(it) 可采用遍历来操作值的添加删除以免写死
+          // 修改操作
+          this.eidtDialogVisible = false
+          return this.$message.success('修改成功')
+        }
+      })
+    },
+    async deleteUser (id) {
+      const ret = await this.$confirm('确定删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+      if (ret !== 'confirm') {
+        return this.$message.info('取消删除')
+      }
+      // 删除操作
+      // const res= await this.$http.delete('deleteUser/' + id)
+      // this.getUserList()
+      const userLists = utils.getUserLists()
+      userLists.data[0].users.pop()
+      this.getUserList()
+      this.$message.success('删除成功')
     }
   }
 
