@@ -12,10 +12,10 @@ const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const login = resolve => require(['../components/login.vue'], resolve);
-const home = resolve => require(['../components/home.vue'], resolve);
-const main = resolve => require(['../components/main.vue'], resolve);
-const userList = resolve => require(['../components/user/userList.vue'], resolve);
+const login = resolve => require(['../components/login.vue'], resolve)
+const home = resolve => require(['../components/home.vue'], resolve)
+const main = resolve => require(['../components/main.vue'], resolve)
+const userList = resolve => require(['../components/user/userList.vue'], resolve)
 
 Vue.use(Router)
 const router = new Router({

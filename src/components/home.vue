@@ -98,18 +98,22 @@ export default {
     loginOut () {
       var that = this
       // that.socket(true)
-      that.setCookie('uName','',-1);
-      that.setCookie('pwd','',-1);
-      that.$store.commit('changeToken',false);
-      // window.sessionStorage.clear()
-      this.$router.push('/login')
+      setTimeout(function () {
+        that.setCookie('uName', '', -1)
+        that.setCookie('pwd', '', -1)
+        that.$store.commit('changeToken', false)
+        // window.sessionStorage.clear()
+        that.$router.push('/login')
+      }, 500)
     },
     // 获取所有菜单
     async getMenuList () {
       // const http = this.$http.get('http://localhost:8095/fhB2bProductCate/list')
       // console.log(http)
       // 简化数据 加awit只能配合{data:ret} 不加返回pramise取不到值  不加{}只能.data 加上就相当于已经是data
-      // const {data: rets} = await this.$http.post('http://localhost:6078/home/login')
+
+      // 之所以请求失败返回null，是因为post请求没带参数，而get请求就可以了
+      // const rets = await this.$http.get('http://localhost:6078/home/login')
       // console.log(rets)
       // 直接这样写可以访问到接口
       // const {data: ret} = await this.$http.get('http://localhost:6078/login')

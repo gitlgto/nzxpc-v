@@ -32,6 +32,18 @@ Vue.use(ElementUI)
 Vue.use(MintUI)
 // Vue.use(socket)
 
+// var url = window.location.href;
+// var httpUrl;
+// if ((/^https/).test(url)) {
+//   httpUrl = 'https://' + window.domain
+// } else {
+//   httpUrl = 'http://' + window.domain
+// }
+// console.log(window.domain)
+// store.state.httpUrl = httpUrl
+// axios.defaults.baseURL = httpUrl
+
+axios.defaults.baseURL = 'http://localhost:6078/'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -45,7 +57,7 @@ window.vv = new Vue({
 console.log(router)
 // 每个路由访问前的操作
 router.beforeEach((to, from, next) => {
-  // console.log(1111111111111111)
+  console.log(1111111111111111)
   // console.log(to.meta.requireAuth)
   if (to.meta.requireAuth) {
     var user = Vue.prototype['getCookie']('uName')
@@ -54,6 +66,7 @@ router.beforeEach((to, from, next) => {
     // console.log(to.path)// 进入到哪个路由去
     // 第一次token为false ，是怎么解决  另外如果cookie存在用户信息，直接跳转
     // 第一种情况只要有一个页面退出，另一个新打开页面会话过期。第二种情况第一个页面退出，新打开访问其他页面也会提示会话过期
+    // 解决办法，如果单纯的直接访问某个页面时，利用created周期函数访问服务器，此时是访问不了的。所以会会话过期。另外还是得弄清钩子函数第一次不生效原因
     // console.log(store.state.token)
     if (user && paw && store.state.token) {
       console.log(user)

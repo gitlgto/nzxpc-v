@@ -5,4 +5,4 @@
 * @Last Modified time: 2017-10-11 16:44:35
 */
 
-'use strict';
+'use strict'

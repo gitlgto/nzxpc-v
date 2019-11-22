@@ -1,12 +1,12 @@
 import {Toast, Indicator, MessageBox} from 'mint-ui'
-import Vue from 'vue'
+// import Vue from 'vue'
 var mts = {
   socket: function (dis) {
     var _this = this
     console.log(this)
     var lockReconnect = false// 避免重复连接
     var ws
-    var tt
+    // var tt
     // var url = _this.$store.state.httpUrl;
     var socketUrl = 'wss://' + 'localhost:6078' + '/ws'
     // if((/^https/).test(url)){
@@ -72,7 +72,7 @@ var mts = {
       serverTimeoutObj: null,
       start: function () {
         console.log('start')
-        var self = this
+        // var self = this
         this.timeoutObj && clearTimeout(this.timeoutObj)
         this.timeoutObj = setTimeout(function () {
           // 这里发送一个心跳，后端收到后，返回一个心跳消息，
