@@ -8,7 +8,11 @@ import main from '@/components/main'
 import userList from '@/components/user/userList'
 
 Vue.use(Router)
-
+// 已解决element-ui 连续点击一个url而报错的问题
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const rout = new Router({
   routes: [
     {
@@ -25,7 +29,7 @@ const rout = new Router({
       name: 'home',
       component: home,
       redirect: '/main',
-      children: [{path: '/main', component: main},{path: '/userList', component: userList}]
+      children: [{path: '/main', component: main}, {path: '/userList', component: userList}]
 
     }
   ]
