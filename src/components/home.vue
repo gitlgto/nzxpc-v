@@ -96,7 +96,12 @@ export default {
   },
   methods: {
     loginOut () {
-      window.sessionStorage.clear()
+      var that = this
+      // that.socket(true)
+      that.setCookie('uName','',-1);
+      that.setCookie('pwd','',-1);
+      that.$store.commit('changeToken',false);
+      // window.sessionStorage.clear()
       this.$router.push('/login')
     },
     // 获取所有菜单

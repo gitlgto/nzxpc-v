@@ -5,32 +5,69 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/'
 import './assets/css/global.css'
 import ElementUI from 'element-ui'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 // import './assets/js/data.js'
-
-import axios from 'axios'
+import MyPlugin from './api/MyPlugin.js'
+// import axios from 'axios'
+import axios from './api/http.js'
+// import socket from './api/socket.js'
 
 // 不生效
 // axios.defaults.baseURI = 'http://localhost:6078/'
 // 请求拦截器预处理 保证拥有获取数据的权限 除了登录后续的每次请求都会带过去token
-axios.interceptors.request.use(config => {
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  console.log(config)
-  return config
-})
-
+// axios.interceptors.request.use(config => {
+//   // config.headers.Authorization = window.sessionStorage.getItem('token')
+//   console.log(config)
+//   return config
+// })
+// 只能实现在发送请求时失败时提示会话过期。如何解决一个页面退出后，新页面打开时提示会话过期还有新页面直接访问会成功
 Vue.prototype.$http = axios
-
+Vue.use(MyPlugin)
 Vue.use(ElementUI)
+Vue.use(MintUI)
+// Vue.use(socket)
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+window.vv = new Vue({
   el: '#app',
   router,
+  store,
   components: {App},
   template: '<App/>'
+})
+console.log(router)
+// 每个路由访问前的操作
+router.beforeEach((to, from, next) => {
+  // console.log(1111111111111111)
+  // console.log(to.meta.requireAuth)
+  if (to.meta.requireAuth) {
+    var user = Vue.prototype['getCookie']('uName')
+    var paw = Vue.prototype['getCookie']('pwd')
+    // console.log(from.path)// 从哪个路由离开
+    // console.log(to.path)// 进入到哪个路由去
+    // 第一次token为false ，是怎么解决  另外如果cookie存在用户信息，直接跳转
+    // 第一种情况只要有一个页面退出，另一个新打开页面会话过期。第二种情况第一个页面退出，新打开访问其他页面也会提示会话过期
+    // console.log(store.state.token)
+    if (user && paw && store.state.token) {
+      console.log(user)
+      console.log(paw)
+      // console.log(store.state.token)
+      console.log(22222222)
+      next()
+    } else {
+      console.log(33333)
+      // router.push('/login');
+      next('/login')
+    }
+  } else {
+    console.log(444444)
+    next()
+  }
 })

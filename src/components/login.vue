@@ -52,12 +52,14 @@ export default {
         } else {
           // 只有发送才有预处理 返回config 预处理主要存储第一次返回给前端的token，这样在接下来的每次请求中都会带着这个token，
           // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
-          // const result = await this.$http.post('http://localhost:6078/login',
+          // const result = await this.$http.post('http://localhost:6078/home/login',
           //   this.loginForm)
           // console.log(result)
+          var that = this;
+          that.goLogins(false)
+
           this.$message.success('登陆成功')
-          window.sessionStorage.setItem('token', 98177010213298356078)
-          this.$router.push('/home')
+          // window.sessionStorage.setItem('token', 98177010213298356078)
         }
       })
     }
