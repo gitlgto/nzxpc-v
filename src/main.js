@@ -47,13 +47,8 @@ axios.defaults.baseURL = 'http://localhost:6078/'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-window.vv = new Vue({
-  el: '#app',
-  router,
-  store,
-  components: {App},
-  template: '<App/>'
-})
+
+// 放在之后能解决首次拦截问题，但刷新有问题  结合token解决刷新和初次访问页面，但还要看看刷新问题
 console.log(router)
 // 每个路由访问前的操作
 router.beforeEach((to, from, next) => {
@@ -67,8 +62,8 @@ router.beforeEach((to, from, next) => {
     // 第一次token为false ，是怎么解决  另外如果cookie存在用户信息，直接跳转
     // 第一种情况只要有一个页面退出，另一个新打开页面会话过期。第二种情况第一个页面退出，新打开访问其他页面也会提示会话过期
     // 解决办法，如果单纯的直接访问某个页面时，利用created周期函数访问服务器，此时是访问不了的。所以会会话过期。另外还是得弄清钩子函数第一次不生效原因
-    // console.log(store.state.token)
-    if (user && paw && store.state.token) {
+    // console.log(store.state.token) 把token换成user。如果已登录则存储user，退出清除user，如果不退出直接关闭窗口，如果user还在则下次直接进到主页，另外加页面不操作刷新失效
+    if ((user && paw && store.state.token) || localStorage.getItem('token')) {
       console.log(user)
       console.log(paw)
       // console.log(store.state.token)
@@ -83,4 +78,11 @@ router.beforeEach((to, from, next) => {
     console.log(444444)
     next()
   }
+})
+window.vv = new Vue({
+  el: '#app',
+  router,
+  store,
+  components: {App},
+  template: '<App/>'
 })

@@ -54,6 +54,7 @@ export default {
           // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
           // const result = await this.$http.post('home/login', {})
           // console.log(result)
+          localStorage.setItem('token', 1111)
           var that = this;
           that.goLogins(false)
 

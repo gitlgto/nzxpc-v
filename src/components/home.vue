@@ -103,6 +103,7 @@ export default {
         that.setCookie('pwd', '', -1)
         that.$store.commit('changeToken', false)
         // window.sessionStorage.clear()
+        window.localStorage.clear()
         that.$router.push('/login')
       }, 500)
     },
