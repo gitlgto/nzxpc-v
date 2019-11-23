@@ -123,6 +123,9 @@ export default {
       // 为了手动添加更多的数据，而不造成每个页面都写入大量数据，现在将数据写在一个js中，然后在main.js中进行引入，还要在要使用的页面的script中引入
       // ，而其实main.js中不需要引用，然后在其他页面中的script中直接
       // 调用改js对应方法即可，以达到每个页面都可以获取该数据进行暂时使用。暂不访问后台。如果还是想在页面写数据，只需将js中复制过来即可
+      // this.$http.post('home/login', {}).then(res => {
+      //   this.menulist = res.data
+      // })
       const ret = utils.getDatas()
       if (ret.meta.status !== 200) {
         return this.$message.error(ret.meta.msg)
