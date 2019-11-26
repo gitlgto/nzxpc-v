@@ -43,7 +43,7 @@ Vue.use(MintUI)
 // store.state.httpUrl = httpUrl
 // axios.defaults.baseURL = httpUrl
 
-axios.defaults.baseURL = 'http://localhost:6078/'
+// axios.defaults.baseURL = 'http://localhost:6078/'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
