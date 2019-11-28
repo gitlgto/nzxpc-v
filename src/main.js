@@ -53,6 +53,11 @@ console.log(router)
 // 每个路由访问前的操作
 router.beforeEach((to, from, next) => {
   console.log(1111111111111111)
+  // 暂定这样处理，如果session中还有user则关闭页面时，下次登录直接进入到主页，
+  if (localStorage.getItem('token') && to.path === '/login') {
+    return next('/home')
+  }
+
   // console.log(to.meta.requireAuth)
   if (to.meta.requireAuth) {
     var user = Vue.prototype['getCookie']('uName')

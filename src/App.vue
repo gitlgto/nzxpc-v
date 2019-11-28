@@ -37,7 +37,7 @@ export default {
           path: '/login'
 
         })
-      }, 30 * 60 * 1000)// 设置半小时清空session进入屏保
+      }, 30 * 60 * 1000)// 设置半小时清空session进入屏保，这时如果直接访问main也会调往login页面 但页面浏览器退出时无法清除 关闭浏览器清除session
     }
   }
 }
