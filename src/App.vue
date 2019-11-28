@@ -19,7 +19,7 @@ export default {
   methods: {
     moveEvent () {
       const path = ['/login']
-      if (!path.includes(this.$route.path)) { // 如果不是登录页面的话页面停止进行30分钟后清空session
+      if (!path.includes(this.$route.path)) { // 如果不是登录页面的话页面停止进行30分钟后清空session  30分钟后不操作调往login
         clearTimeout(this.timmer)
         this.init()
       }

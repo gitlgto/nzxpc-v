@@ -58,11 +58,11 @@ var mts = {
     p = that.hfWhite(p);
     Indicator.open();
     console.log(u, p);
-    that.$axios.post("/fhApHome/login", {
+    that.$http.post('/fhApHome/login', {
       userName: u,
       password: p
     }).then(res => {
-      console.log("登录接口");
+      console.log('登录接口');
       console.log(m)
       Indicator.close();
       console.log(res);

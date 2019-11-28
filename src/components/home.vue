@@ -126,7 +126,7 @@ export default {
       // 调用改js对应方法即可，以达到每个页面都可以获取该数据进行暂时使用。暂不访问后台。如果还是想在页面写数据，只需将js中复制过来即可
       // this.$http.post('home/login', {}).then(res => {
       //   this.menulist = res.data
-      // })
+      // }) 封装方法，js,放在main.js中引用
       const ret = utils.getDatas()
       if (ret.meta.status !== 200) {
         return this.$message.error(ret.meta.msg)
