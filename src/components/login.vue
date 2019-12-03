@@ -27,14 +27,14 @@ export default {
     return {
       // 登录表单数据绑定对象
       loginForm: {
-        username: 'admin',
-        password: 'aaaaa'
+        username: '000',
+        password: 'aaaaaa'
       },
       loginFormRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }],
+          { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }]
+          { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }]
       }
     }
   },
@@ -54,20 +54,24 @@ export default {
           // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
           // const result = await this.$http.post('home/login', {})
           // console.log(result)
-          // this.$http.post('home/login', {
-          //   username: this.username,
-          //   password: this.password
-          // }).then(res => {
-          //   console.log(res)
-          //   if (res.data.ok){
-          //     this.menulist = res.data
-          //     localStorage.setItem('token', this.loginForm.username)
-          //   }
-          // })
-          localStorage.setItem('token', 1111)
-          var that = this
-          that.goLogins(false)
-          console.log(that.loginForm.username)
+          this.$http.post('http://localhost:6078/fhHome/login', {
+            userName: this.loginForm.username,
+            passWord: this.loginForm.password
+          }).then(res => {
+            console.log(res)
+            if (res.data.ok) {
+              // this.menulist = res.data
+              localStorage.setItem('token', this.loginForm.username)
+              if (this.$route.path === '/login'){
+                this.$router.push('/home');
+              }
+              this.$message.success('登陆成功')
+            }
+          })
+          // localStorage.setItem('token', 1111)
+          // var that = this
+          // that.goLogins(false)
+          // console.log(that.loginForm.username)
           this.$message.success('登陆成功')
           // window.sessionStorage.setItem('token', 98177010213298356078)
         }

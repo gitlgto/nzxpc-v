@@ -64,10 +64,11 @@ router.beforeEach((to, from, next) => {
     var paw = Vue.prototype['getCookie']('pwd')
     // console.log(from.path)// 从哪个路由离开
     // console.log(to.path)// 进入到哪个路由去
-    // 第一次token为false ，是怎么解决  另外如果cookie存在用户信息，直接跳转   用sessionstorge新打开页面数据为空
+    // 第一次token为false ，是怎么解决  另外如果cookie存在用户信息，直接跳转   用sessionstorge新打开新页面存储数据为空，也就不能实现如果已经登录然后直接访问主页面不能跳转，还是使用cookie控制
     // 第一种情况只要有一个页面退出，另一个新打开页面会话过期。第二种情况第一个页面退出，新打开访问其他页面也会提示会话过期
     // 解决办法，如果单纯的直接访问某个页面时，利用created周期函数访问服务器，此时是访问不了的。所以会会话过期。另外还是得弄清钩子函数第一次不生效原因
     // console.log(store.state.token) 把token换成user。如果已登录则存储user，退出清除user，如果不退出直接关闭窗口，如果user还在则下次直接进到主页，另外加页面不操作刷新失效
+    // 要不就优化成只用cookie数据，不用state.token
     if ((user && paw && store.state.token) || localStorage.getItem('token')) {
       console.log(user)
       console.log(paw)
