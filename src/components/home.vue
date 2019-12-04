@@ -143,15 +143,18 @@ export default {
     // 保存链接的激活状态
     saveBtn (btn) {
       console.log(1111558987)
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      setTimeout(() => {
-        loading.close()
-      }, 1000)
+        // 可使用cookie，token，state
+      if (localStorage.getItem('token')){
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        setTimeout(() => {
+          loading.close()
+        }, 1000)
+      }
       // 使用全屏遮罩和再次访问接口方式达到点击按钮再次请求效果，为啥close不生效。另一种直接刷新整个页面 如果重新访问跳转下页面的话，周期函数也会重新执行
 
       // Indicator.open()

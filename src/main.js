@@ -16,7 +16,8 @@ import MyPlugin from './api/MyPlugin.js'
 // import axios from 'axios'
 import axios from './api/http.js'
 // import socket from './api/socket.js'
-
+import { Indicator , Toast, MessageBox } from 'mint-ui'
+import Router from '@/router/index'
 // 不生效
 // axios.defaults.baseURI = 'http://localhost:6078/'
 // 请求拦截器预处理 保证拥有获取数据的权限 除了登录后续的每次请求都会带过去token
@@ -76,9 +77,12 @@ router.beforeEach((to, from, next) => {
       console.log(22222222)
       next()
     } else {
+      MessageBox.alert('会话过期,请重新登录').then(action => {
+        Router.push({path: '/login'})
+      })
       console.log(33333)
       // router.push('/login');
-      next('/login')
+      // next('/login')
     }
   } else {
     console.log(444444)
