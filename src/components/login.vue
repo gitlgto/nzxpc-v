@@ -31,7 +31,7 @@ export default {
         password: 'aaaaaa'
       },
       loginFormRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' },
+        username: [{ required: false, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' },
           { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }]
@@ -58,15 +58,16 @@ export default {
             userName: this.loginForm.username,
             passWord: this.loginForm.password
           }).then(res => {
-            console.log(res)
-            if (res.data.ok) {
-              // this.menulist = res.data
-              localStorage.setItem('token', this.loginForm.username)
-              if (this.$route.path === '/login'){
-                this.$router.push('/home');
-              }
-              this.$message.success('登陆成功')
-            }
+            // 1.后端要配置全局异常参数处理 2.做了修改网站图标的处理
+            console.log(res.data)
+            // if (res.data.ok) {
+            //   // this.menulist = res.data
+            //   localStorage.setItem('token', this.loginForm.username)
+            //   if (this.$route.path === '/login'){
+            //     this.$router.push('/home');
+            //   }
+            //   this.$message.success('登陆成功')
+            // }
           })
           // localStorage.setItem('token', 1111)
           // var that = this
