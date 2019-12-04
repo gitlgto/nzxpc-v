@@ -74,7 +74,7 @@
 </template>
 <script>
 import utils from '../assets/js/data'
-
+// import { Indicator } from 'mint-ui'
 export default {
   data () {
     return {
@@ -142,6 +142,30 @@ export default {
     },
     // 保存链接的激活状态
     saveBtn (btn) {
+      console.log(1111558987)
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      setTimeout(() => {
+        loading.close()
+      }, 1000)
+      // 使用全屏遮罩和再次访问接口方式达到点击按钮再次请求效果，为啥close不生效。另一种直接刷新整个页面 如果重新访问跳转下页面的话，周期函数也会重新执行
+
+      // Indicator.open()
+      // Indicator.open({
+      //   text: '加载中...',
+      //   spinnerType: 'fading-circle'
+      // })
+      // setTimeout(()=>{Indicator.close()},1000)
+      // Indicator.close()
+      // this.getMenuList() 加载完之后再请求一次
+      // this.$router.go(0) 此方法重新刷新页面
+      // 修改完数据应该重新访问下接口获取新数据，再次点击按钮时也应该再次访问
+      this.$router.push(btn)
+      // console.log(btn) 这种方法重新访问下，周期函数也会重新执行，这样简单点
       window.sessionStorage.setItem('btn', btn)
       // 重新赋值切换链接保持高亮
       this.btn = btn

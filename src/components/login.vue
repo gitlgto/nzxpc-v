@@ -60,15 +60,17 @@ export default {
           }).then(res => {
             // 1.后端要配置全局异常参数处理 2.做了修改网站图标的处理
             console.log(res.data)
-            // if (res.data.ok) {
-            //   // this.menulist = res.data
-            //   localStorage.setItem('token', this.loginForm.username)
-            //   if (this.$route.path === '/login'){
-            //     this.$router.push('/home');
-            //   }
-            //   this.$message.success('登陆成功')
-            // }
+            if (res.data.ok) {
+              // this.menulist = res.data
+              localStorage.setItem('token', this.loginForm.username)
+              if (this.$route.path === '/login'){
+                this.$router.push('/home');
+              }
+              this.$message.success('登陆成功')
+            }
           })
+
+          // 再次点击重新访问
           // localStorage.setItem('token', 1111)
           // var that = this
           // that.goLogins(false)

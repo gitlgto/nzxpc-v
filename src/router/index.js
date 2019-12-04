@@ -42,7 +42,9 @@ const router = new Router({
         meta: {
           requireAuth: true
         },
-        component: main}, {path: '/userList',
+        component: main},
+
+      {path: '/userList',
         meta: {
           requireAuth: true
         },

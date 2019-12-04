@@ -155,6 +155,11 @@ export default {
   },
   methods: {
     async getUserList () {
+
+      this.$http.post('http://localhost:6078/fhHome/setting', {}).then(ite => {
+        console.log(ite)
+      })
+
       const res = utils.getUserLists()
       const ret = utils.getUserOneLists()
       // console.log(res)
