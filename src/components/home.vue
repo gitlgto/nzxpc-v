@@ -104,6 +104,7 @@ export default {
         that.$store.commit('changeToken', false)
         // window.sessionStorage.clear()
         window.localStorage.clear()
+        window.sessionStorage.clear()
         that.$router.push('/login')
       }, 500)
     },
