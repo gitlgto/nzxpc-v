@@ -27,6 +27,7 @@ import Router from '@/router/index'
 //   return config
 // })
 // 只能实现在发送请求时失败时提示会话过期。如何解决一个页面退出后，新页面打开时提示会话过期还有新页面直接访问会成功
+// 全局组件
 Vue.prototype.$http = axios
 Vue.use(MyPlugin)
 Vue.use(ElementUI)
