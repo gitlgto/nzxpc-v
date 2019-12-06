@@ -80,11 +80,13 @@ router.beforeEach((to, from, next) => {
       console.log(22222222)
       next()
     } else {
+      next()
       MessageBox.alert('会话过期,请重新登录').then(action => {
         Router.push({path: '/login'})
       })
       console.log(33333)
       // router.push('/login');
+      // TODO 是不是先进到这个页面再回到登录,在会话过期之前加上next()
       // next('/login')
     }
   } else {

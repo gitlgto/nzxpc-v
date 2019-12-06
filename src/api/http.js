@@ -45,11 +45,12 @@ axios.interceptors.response.use(
   function (error) {
     if (!error.response) {
       console.log(error.response)
+      // TODO 是不是登录页来的就不提示会话过期了
       // 访问不到接口会报这个 服务端断开连接.如果一访问某个页面，就发起请求后台，然后失败是不是就可以达到会话过期。另外第一次钩子失效（用会话过期处理）。
       // 但是如果一个退出另一个新打开的也会退出是怎样的(目前是可以的，但是没有提示直接退出了，提示已经加上了，但是点击按钮时不应该还有加载)?能不能清除对应数据，这样周期函数就没有数据了。  如果返回数据不为空就可以直接访问页面 如果数据不为空会不会显示
       MessageBox.alert('会话过期,请重新登录').then(action => {
         localStorage.clear()
-        // 这边不跳往登录页，原因是没清除token，以至于直接从login到home了,暂时清除token，看后续的影响
+        // TODO 这边会话过期后不跳往登录页，原因是没清除token，以至于直接从login到home了,暂时清除token，看后续的影响
         // 另外一个问题，访问登陆页的话，没连接不应该提示会话过期
         Router.push({path: '/login'})
       })

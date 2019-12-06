@@ -50,6 +50,7 @@ export default {
           // 目前已经引入element，对应方法不需要另引用，只需直接使用加$
           this.$message.error('登陆失败')
         } else {
+          // TODO this.$router.push('/home')对于login要不要先进主页再会话过期，但是请求两两次
           // 只有发送才有预处理 返回config 预处理主要存储第一次返回给前端的token，这样在接下来的每次请求中都会带着这个token，
           // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
           // const result = await this.$http.post('home/login', {})

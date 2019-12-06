@@ -110,7 +110,7 @@ export default {
     },
     // 获取所有菜单
     async getMenuList () {
-      // 原因已查明，main.js中默认url不能设置。只能看下面这样写，另外如果post请求，需要带参数，没有就带{}
+      // TODO 原因已查明，main.js中默认url不能设置。只能看下面这样写，另外如果post请求，需要带参数，没有就带{}
       // const http = this.$http.get('http://localhost:8095/fhB2bProductCate/list')
       // console.log(http)
       // 简化数据 加awit只能配合{data:ret} 不加返回pramise取不到值  不加{}只能.data 加上就相当于已经是data
@@ -167,7 +167,7 @@ export default {
       // Indicator.close()
       // this.getMenuList() 加载完之后再请求一次
       // this.$router.go(0) 此方法重新刷新页面
-      // 修改完数据应该重新访问下接口获取新数据，再次点击按钮时也应该再次访问
+      // TODO 修改完数据应该重新访问下接口获取新数据，再次点击按钮时也应该再次访问,现在是重新访问下页面
       this.$router.push(btn)
       // console.log(btn) 这种方法重新访问下，周期函数也会重新执行，这样简单点
       window.sessionStorage.setItem('btn', btn)
