@@ -73,6 +73,9 @@ var util = {
   },
   getMap: function () {
     return new Map()
+  },
+  Validate: function () {
+
   }
 }
 
