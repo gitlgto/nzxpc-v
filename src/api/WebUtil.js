@@ -1,4 +1,4 @@
-import {MessageBox} from 'mint-ui'
+import { MessageBox } from 'mint-ui'
 var util = {
   // 目前使用没问题
   messageBox: function (msg) {
@@ -10,7 +10,6 @@ const WebUtil = {
     for (var key in util) {
       Vue.prototype[key] = util[key]
     }
-
   }
 }
 export default WebUtil
