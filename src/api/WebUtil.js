@@ -48,8 +48,34 @@ var util = {
    */
   isPathSame: function (path) {
     return this.$route.path === path
+  },
+  Post: function (map) {
+    // TODO 实现思路会存在多个字段数据，是用map映射，还是用一个字符串切割1.整个字符串加数据2.采用map传值，先试用map 有两种遍历方法
+    // map.forEach(function (value,index) {
+    //   console.log(index+value)
+    // })
+    // this.$http.post('',{
+    // })
+    var m = {}
+    console.log(map.entries())
+    for (let [index, val] of map.entries()) {
+      m[index] = val
+      console.log(index + val)
+    }
+    // TODO 暂时先封装一半请求，剩下看能否再优化下，还包括get请求post无参请求
+    console.log(m)
+    let post = this.$http.post('http://localhost:6078/fhHome/login', m)
+    return post
+    // post.then(res => {
+    //   console.log(res)
+    //   console.log(11111)
+    // })
+  },
+  getMap: function () {
+    return new Map()
   }
 }
+
 const WebUtil = {
   install: function (Vue, options) {
     for (var key in util) {

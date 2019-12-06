@@ -47,6 +47,12 @@ export default {
       this.$refs.loginRef.validate(async val => {
         // console.log(this.name) 返回验证结果val
         if (!val) {
+
+          this.Post(this.getMap().set('aa', 1).set('bb', 2)).then(item => {
+            console.log(item)
+            console.log(11221212121)
+          })
+
           // 目前已经引入element，对应方法不需要另引用，只需直接使用加$
           this.$message.error('登陆失败')
         } else {
