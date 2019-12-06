@@ -48,16 +48,24 @@ export default {
       this.$refs.loginRef.validate(async val => {
         // console.log(this.name) 返回验证结果val
         if (!val) {
-          var  yz=[]
+
+          // TODO 用于测试
+          var zy=[{ required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }]
+
+          var yz = []
           yz.push({
-            aa:'111',
-            bb:'222'
-          })
+            aa: '111',
+            bb: '222'
+          }, {cc: '333'})
           this.Post(this.getMap().set('aa', 1).set('bb', 2)).then(item => {
             console.log(item)
             console.log(11221212121)
           })
           console.log(yz)
+          console.log(zy)
+          // TODO 用于测试，将写到util后删掉
+
           // 目前已经引入element，对应方法不需要另引用，只需直接使用加$
           this.$message.error('登陆失败')
         } else {
