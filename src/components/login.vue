@@ -49,27 +49,15 @@ export default {
         // console.log(this.name) 返回验证结果val
         if (!val) {
 
-          // TODO 用于测试
-          var zy=[{ required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }]
-
-          var yz = []
-          yz.push({
-            aa: '111',
-            bb: '222'
-          }, {cc: '333'})
-          this.Post(this.getMap().set('aa', 1).set('bb', 2)).then(item => {
+          this.postWithParams(this.getMap().set('aa', 1).set('bb', 2), '').then(item => {
             console.log(item)
             console.log(11221212121)
           })
-          console.log(yz)
-          console.log(zy)
-          // TODO 用于测试，将写到util后删掉
 
           // 目前已经引入element，对应方法不需要另引用，只需直接使用加$
           this.$message.error('登陆失败')
         } else {
-          // TODO this.$router.push('/home')对于login要不要先进主页再会话过期，但是请求两两次
+          // TODO this.$router.push('/home')对于login要不要先进主页再会话过期，但是请求两两次,退出时又出现一次会话过期
           // 只有发送才有预处理 返回config 预处理主要存储第一次返回给前端的token，这样在接下来的每次请求中都会带着这个token，
           // 赋值给author属性上，服务端取到这个值在进行觉得是否处理
           // const result = await this.$http.post('home/login', {})
