@@ -97,6 +97,7 @@ var util = {
       message: split[1],
       trigger: trigger
     })
+    return validate
   }
 }
 
