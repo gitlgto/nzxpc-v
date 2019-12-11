@@ -78,7 +78,7 @@ var util = {
 
   },
   getNoParams: function (url) {
-
+    console.log(url)
   },
   getMap: function () {
     return new Map()
