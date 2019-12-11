@@ -38,8 +38,8 @@ const router = new Router({
       path: '/home',
       name: 'home',
       // meta: {
-      //   requireAuth: true
-      // }, TODO 存在多个main，会话过期处理时，待处理
+      //   requireAuth: true 给main加上就可以了，因为这边是重定向到main
+      // },
       component: home,
       redirect: '/main',
       children: [
