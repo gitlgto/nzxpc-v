@@ -55,6 +55,7 @@ const router = new Router({
         {
           name: 'page1',
           path: '/page1',
+          meta: {requireAuth: true},
           component: page1
         },
         {

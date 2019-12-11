@@ -72,13 +72,24 @@ var util = {
     // })
   },
   postNoParams: function (url) {
-
+    var m = {}
+    let post = this.$http.post(url, m)
+    return post
   },
   getWithParams: function (params, url) {
-
+    var m = {}
+    for (let [index, val] of params.entries()) {
+      m[index] = val
+    }
+    let get = this.$http.get(url, m)
+    return get
   },
   getNoParams: function (url) {
     console.log(url)
+    // get请求无参不用传参
+    // var m = {}
+    let get = this.$http.get(url)
+    return get
   },
   getMap: function () {
     return new Map()

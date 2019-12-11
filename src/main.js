@@ -80,17 +80,22 @@ router.beforeEach((to, from, next) => {
       console.log(22222222)
       next()
     } else {
-      // TODO 有个问题需要处理，直接进入main，会话过期，再进去就会多个main，报错
-      next()
-      // TODO 处理方式，初始化一次，后期再优化
-      MessageBox.alert('会话过期,请重新登录').then(action => {
-        store.state.openTab = []
-        store.state.activeIndex = '/main'
-        Router.push({path: '/login'})
-      })
+      if (to.path === '/home' || to.path === '/main') {
+        // 如果访问的路径是main或者home，则先进去再提示会话过期。是别的就直接会话过期
+        next()
+      }
+      // TODO 有个问题需要处理，直接进入main，会话过期，再进去就会多个main，报错，目前处理方式，再初始化一次，后期再优化
+      // TODO 有个问题需要解决webutil引入不了
+      setTimeout(function () {
+        MessageBox.alert('会话过期,请重新登录').then(action => {
+          store.state.openTab = []
+          store.state.activeIndex = '/main'
+          Router.push({path: '/login'})
+        })
+      }, 200)
       console.log(33333)
       // router.push('/login');
-      // TODO 是不是先进到这个页面再回到登录,在会话过期之前加上next()
+      // TODO 是不是先进到这个页面再回到登录,在会话过期之前加上next()，已解决
       // next('/login')
     }
   } else {

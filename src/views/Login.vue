@@ -84,7 +84,7 @@ export default {
           //   userName: this.loginForm.username,
           //   passWord: this.loginForm.password
           // }).then(res => {
-          //   // 1.后端要配置全局异常参数处理 2.做了修改网站图标的处理
+          //   // 1.后端要配置全局异常参数处理，这样才能获取注解上的验证 2.做了修改网站图标的处理
           //   console.log(res.data)
           //   if (res.data.ok) {
           //     // this.menulist = res.data
@@ -95,7 +95,7 @@ export default {
           //     this.$message.success('登陆成功')
           //   }
           // })
-          // localStorage.setItem('token', 1111)
+          localStorage.setItem('token', 1111)
           this.$router.push('/home')
           // 再次点击重新访问 TODO 出现一种情况是先进home再设置token，会出现出现会话过期，点击后还是回到main，是因为连续走了两次判断
           // localStorage.setItem('token', 1111)
