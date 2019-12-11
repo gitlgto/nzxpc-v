@@ -12,10 +12,14 @@ const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const login = resolve => require(['../components/login.vue'], resolve)
-const home = resolve => require(['../components/home.vue'], resolve)
-const main = resolve => require(['../components/main.vue'], resolve)
-const userList = resolve => require(['../components/user/userList.vue'], resolve)
+const login = resolve => require(['../views/Login.vue'], resolve)
+const home = resolve => require(['../views/Home.vue'], resolve)
+const main = resolve => require(['../views/main.vue'], resolve)
+// const userList = resolve => require(['../components/user/userList.vue'], resolve)
+const page1 = resolve => require(['../views/page1.vue'], resolve)
+const page2 = resolve => require(['../views/page2.vue'], resolve)
+const page3 = resolve => require(['../views/page3.vue'], resolve)
+const page4 = resolve => require(['../views/page4.vue'], resolve)
 
 Vue.use(Router)
 const router = new Router({
@@ -33,22 +37,48 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      meta: {
-        requireAuth: true
-      },
+      // meta: {
+      //   requireAuth: true
+      // }, TODO 存在多个main，会话过期处理时，待处理
       component: home,
-      // redirect: '/main',
-      children: [{path: '/main',
-        meta: {
-          requireAuth: true
+      redirect: '/main',
+      children: [
+        {
+          name: 'main',
+          path: '/main',
+          meta: {
+            // 这个地方加上之后，会做会话过期验证，而做会话过期验证会出现多个main的问题，需要处理。
+            requireAuth: true
+          },
+          component: main
         },
-        component: main},
+        {
+          name: 'page1',
+          path: '/page1',
+          component: page1
+        },
+        {
+          name: 'page2',
+          path: '/page2',
+          component: page2
+        },
+        {
+          name: 'page3',
+          path: '/page3',
+          component: page3
+        },
+        {
+          name: 'page4',
+          path: '/page4',
+          component: page4
+        }
+      // {path: '/userList',
+      //   meta: {
+      //     requireAuth: true
+      //   },
+      //   component: userList}
 
-      {path: '/userList',
-        meta: {
-          requireAuth: true
-        },
-        component: userList}]
+      ]
 
     }
   ]

@@ -1,3 +1,4 @@
+<!--作为参考，暂不使用，后期删掉该页面-->
 <template>
   <el-container class="home_container">
     <el-header>
@@ -144,8 +145,8 @@ export default {
     // 保存链接的激活状态
     saveBtn (btn) {
       console.log(1111558987)
-        // 可使用cookie，token，state
-      if (localStorage.getItem('token')){
+      // 可使用cookie，token，state
+      if (localStorage.getItem('token')) {
         const loading = this.$loading({
           lock: true,
           text: 'Loading',

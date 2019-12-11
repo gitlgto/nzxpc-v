@@ -80,6 +80,7 @@ router.beforeEach((to, from, next) => {
       console.log(22222222)
       next()
     } else {
+      // TODO 有个问题需要处理，直接进入main，会话过期，再进去就会多个main，报错
       next()
       MessageBox.alert('会话过期,请重新登录').then(action => {
         Router.push({path: '/login'})
