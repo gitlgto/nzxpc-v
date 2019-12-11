@@ -84,7 +84,6 @@ router.beforeEach((to, from, next) => {
         // 如果访问的路径是main或者home，则先进去再提示会话过期。是别的就直接会话过期
         next()
       }
-      console.log(window.vv)
       // TODO 有个问题需要处理，直接进入main，会话过期，再进去就会多个main，报错，目前处理方式，再初始化一次，后期再优化
       // TODO 有个问题需要解决webutil引入不了 在window.vv直接调用,具体原因还不知道,猜测是window.vv属于vue实例，
       //  而引入了webutil，然后vue将其添加进去，所以已经有对应方法，可以直接使用，
@@ -92,8 +91,9 @@ router.beforeEach((to, from, next) => {
       //  猜测是可能是新实例要加入
       setTimeout(function () {
         MessageBox.alert('会话过期,请重新登录').then(action => {
-          store.state.openTab = []
-          store.state.activeIndex = '/main'
+          // store.state.openTab = []
+          // store.state.activeIndex = '/main'
+          window.vv.tabReset()
           Router.push({path: '/login'})
         })
       }, 200)

@@ -109,6 +109,12 @@ var util = {
       trigger: trigger
     })
     return validate
+  },
+  tabReset: function () {
+    console.log(this)
+    // 此时这个this指向window.vv也就是vue实例，所以在main中使用没问题
+    this.$store.state.openTab = []
+    this.$store.state.activeIndex = '/main'
   }
 }
 
