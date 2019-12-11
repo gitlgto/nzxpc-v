@@ -13,6 +13,8 @@ export default {
   name: 'navTop',
   methods: {
     loginOut () {
+      this.$store.commit('changeToken',false)
+      console.log(this.$store.state.token)
       // this.$router.push('/login')
       var that = this
       this.$store.state.openTab = []
@@ -21,7 +23,7 @@ export default {
       setTimeout(function () {
         that.setCookie('uName', '', -1)
         that.setCookie('pwd', '', -1)
-        that.$store.commit('changeToken', false)
+        // that.$store.commit('changeToken', false)
         // window.sessionStorage.clear()
         window.localStorage.clear()
         window.sessionStorage.clear()

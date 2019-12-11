@@ -113,6 +113,8 @@ var util = {
   tabReset: function () {
     console.log(this)
     // 此时这个this指向window.vv也就是vue实例，所以在main中使用没问题
+    this.$store.commit('changeToken',false)
+    console.log(this.$store.state.token)
     this.$store.state.openTab = []
     this.$store.state.activeIndex = '/main'
   }

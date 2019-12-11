@@ -64,6 +64,8 @@ router.beforeEach((to, from, next) => {
 
   // console.log(to.meta.requireAuth)
   if (to.meta.requireAuth) {
+    // 之所以刷新会走会话过期，是因为刷新过后变成false.这是走路由之前，
+    console.log(store.state.token)
     var user = Vue.prototype['getCookie']('uName')
     var paw = Vue.prototype['getCookie']('pwd')
     // console.log(from.path)// 从哪个路由离开

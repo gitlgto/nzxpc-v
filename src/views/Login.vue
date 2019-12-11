@@ -95,7 +95,9 @@ export default {
           //     this.$message.success('登陆成功')
           //   }
           // })
-          // localStorage.setItem('token', 1111)
+          this.$store.commit('changeToken',true)
+          console.log(this.$store.state.token)
+          // localStorage.setItem('token', this.$store.state.token)
           this.$router.push('/home')
           // 再次点击重新访问 TODO 出现一种情况是先进home再设置token，会出现出现会话过期，点击后还是回到main，是因为连续走了两次判断
           // localStorage.setItem('token', 1111)
