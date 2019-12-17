@@ -97,6 +97,7 @@ export default {
           // })
           this.$store.commit('changeToken',true)
           console.log(this.$store.state.token)
+          // TODO 如果想测试会话过期，则注释掉即可，但有个问题，如果已经点击过一个路由，在别的退出后，点击应该是会话过期的，但是没反应
           localStorage.setItem('token', this.$store.state.token)
           this.$router.push('/home')
           // 再次点击重新访问 TODO 出现一种情况是先进home再设置token，会出现出现会话过期，点击后还是回到main，是因为连续走了两次判断
