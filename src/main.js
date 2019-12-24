@@ -14,6 +14,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // import './assets/js/data.js'
 import MyPlugin from './api/MyPlugin.js'
 import WebUtil from './api/WebUtil.js'
+import base64 from './api/base64.js'
 // import axios from 'axios'
 import axios from './api/http.js'
 // import socket from './api/socket.js'
@@ -34,6 +35,7 @@ Vue.use(MyPlugin)
 Vue.use(ElementUI)
 Vue.use(MintUI)
 Vue.use(WebUtil)
+Vue.use(base64)
 // Vue.use(socket)
 
 // var url = window.location.href;

@@ -95,7 +95,8 @@ export default {
           //     this.$message.success('登陆成功')
           //   }
           // })
-          this.$store.commit('changeToken',true)
+          // TODO 对于登录，应该将数据加密后再存入cookie，存入storge的数据也可加密，然后取出来做判断。
+          this.$store.commit('changeToken', true)
           console.log(this.$store.state.token)
           // TODO 如果想测试会话过期，则注释掉即可，但有个问题，如果已经点击过一个路由，在别的退出后，点击应该是会话过期的，但是没反应
           localStorage.setItem('token', this.$store.state.token)
